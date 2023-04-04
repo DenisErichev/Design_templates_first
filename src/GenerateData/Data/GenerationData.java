@@ -10,13 +10,13 @@ import Logger.Loggers.IntegerLogger;
 import Logger.Loggers.StringLogger;
 import ProcessingData.Interfaces.IntegerProcess;
 import ProcessingData.Interfaces.StringProcess;
+import ProcessingData.IprocessData;
 import ProcessingData.ProcessData;
 
 public class GenerationData {
     private int amountData;
     private String type;
     private Igenerable igenerable;
-    private Logger logger;
 
     public GenerationData(int amountData, String type) {
         this.amountData = amountData;
@@ -35,11 +35,12 @@ public class GenerationData {
 
     public Ilogger runProcessData() {
         Ilogger ilogger = null;
+        IprocessData iprocessData = new ProcessData(this.igenerable.getList());
         if (this.type.equals("строковое")) {
-            StringProcess stringProcess = new ProcessData(this.igenerable.getList()).createStrProcessData();
+            StringProcess stringProcess = iprocessData.createStrProcessData();
             ilogger = new StringLogger(stringProcess.firstHandler(), stringProcess.getCountWord(), stringProcess.getWordStrings(), stringProcess.getCountSymbols());
         } else if (this.type.equals("целое")) {
-            IntegerProcess integerProcess = (new ProcessData(this.igenerable.getList())).createIntProcessData();
+            IntegerProcess integerProcess = iprocessData.createIntProcessData();
             ilogger = new IntegerLogger(integerProcess.Sum(), (double)integerProcess.Average(), integerProcess.Max(), integerProcess.Min(), integerProcess.delete());
         }
 
@@ -47,7 +48,7 @@ public class GenerationData {
     }
 
     public void answer() {
-        this.logger = new Logger(this.runProcessData());
-        this.logger.getLogger().printAnswer();
+        Logger logger = new Logger(this.runProcessData());
+        logger.getLogger().printAnswer();
     }
 }
