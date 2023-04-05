@@ -13,6 +13,9 @@ import ProcessingData.Interfaces.StringProcess;
 import ProcessingData.IprocessData;
 import ProcessingData.ProcessData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GenerationData {
     private int amountData;
     private String type;
