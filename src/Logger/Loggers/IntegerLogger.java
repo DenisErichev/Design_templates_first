@@ -26,5 +26,6 @@ public class IntegerLogger implements Ilogger {
 		for (int i = 0; i < del.size(); i++) {
 			System.out.print(del.get(i) + " ");
 		}
+		System.out.println();
 	}
 }

@@ -1,5 +1,6 @@
 package ProcessingData.TypeClasses;
 
+import Logger.Loggers.Ilogger;
 import ProcessingData.Interfaces.IntegerProcess;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +10,10 @@ import static CheckMethods.CheckMethods.checkInputParity;
 
 public class ProcessingInteger implements IntegerProcess {
 	private List<Integer> intList;
-	public ProcessingInteger(List<Integer> lst){
+	private String deleteChoice;
+	public ProcessingInteger(List<Integer> lst,String deleteChoice){
 		intList = lst;
+		this.deleteChoice = deleteChoice;
 	}
 	public int sum = 0;
 	public int Sum () {
@@ -37,13 +40,9 @@ public class ProcessingInteger implements IntegerProcess {
 		return max;
 	}
 	public List<Integer> delete () {
-		System.out.println("Какие элементы удалить? (четные или нечетные)");
-		Scanner sc = new Scanner(System.in);
-		String choice="";
-		choice = checkInputParity(choice,sc);
 		List <Integer> currList = new ArrayList<>();
 		int size = intList.size();
-		if (choice.equals("четные")) {
+		if (deleteChoice.equals("четные")) {
 			for (int i = 0; i < size; i++) {
 				if(i%2 == 0) {
 					continue;
@@ -51,7 +50,7 @@ public class ProcessingInteger implements IntegerProcess {
 				currList.add(intList.get(i));
 			}
 		}
-		else if (choice.equals("нечетные")) {
+		else if (deleteChoice.equals("нечетные")) {
 			for (int i = 0; i < size; i++) {
 				if(i%2 == 1) {
 					continue;
@@ -61,4 +60,6 @@ public class ProcessingInteger implements IntegerProcess {
 		}
 		return currList;
 	}
+
+
 }

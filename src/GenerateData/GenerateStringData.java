@@ -30,17 +30,22 @@ public class GenerateStringData implements Igenerable {
 		int randomStrLen = random.nextInt(2,10);
 		String str = "";
 		for(int i=0;i<randomStrLen;i++) {
-			targetStringLength = random.nextInt(2,6);
+			targetStringLength = random.nextInt(2,3);
 			String generatedString = random.ints(leftLimit, rightLimit + 1)//поток псевдослуч.чисел
-				.limit(targetStringLength)//выборка элементов конкретной длины
-				.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)//полученную выборку представляем в строковый вид
-				.toString();
+					.limit(targetStringLength)//выборка элементов конкретной длины
+					.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)//полученную выборку представляем в строковый вид
+					.toString();
 			str += generatedString+" ";
 		}
 		return str;
 	}
 	public List getList(){
 		return strList;
+	}
+
+	@Override
+	public boolean checkList() {
+		return strList.isEmpty();
 	}
 
 }

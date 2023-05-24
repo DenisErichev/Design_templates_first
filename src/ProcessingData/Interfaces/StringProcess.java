@@ -1,5 +1,7 @@
 package ProcessingData.Interfaces;
 
+import Logger.Loggers.Ilogger;
+
 import java.util.List;
 
 public interface StringProcess {

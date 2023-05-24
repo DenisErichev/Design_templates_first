@@ -9,11 +9,13 @@ import java.util.List;
 
 public class ProcessData implements IprocessData{
 	private List lst;
-	public ProcessData(List lst) {
+	private String deleteChoice = "";
+	public ProcessData(List lst,String deleteChoice) {
 		this.lst = lst;
+		this.deleteChoice = deleteChoice;
 	}
 	public IntegerProcess createIntProcessData(){
-		return new ProcessingInteger(lst);
+		return new ProcessingInteger(lst,deleteChoice);
 	}
 	public StringProcess createStrProcessData(){
 		return new ProcessingString(lst);
