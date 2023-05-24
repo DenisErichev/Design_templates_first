@@ -18,7 +18,6 @@ public class Customer implements Runnable{
             throw new RuntimeException(e);
         }
 
-//        generationData.answer();
 
     }
 }
