@@ -32,12 +32,16 @@ public class GenerationData{
     private Lock lock;
     private Semaphore barberChair;
     private List<Ilogger> lstIlog = new ArrayList<>();
+    private AtomicInteger waitingCustomerCount;
+    private int noOfWaitingChairs;
     private Semaphore barberLock;
     private Semaphore customerLock;
     public Logger logger;
     private String deleteChoice = "";
 
-    public GenerationData(Semaphore barberLock, Semaphore customerLock,String type1,int amountData,String deleteChoice) {
+    public GenerationData(int noOfWaitingChairs, Semaphore barberLock, Semaphore customerLock,String type1,int amountData,String deleteChoice) {
+        this.waitingCustomerCount = new AtomicInteger(0);
+        this.noOfWaitingChairs = noOfWaitingChairs;
         this.amountData = amountData;
         this.type1 = type1;
 //        lsType.add(type1);
@@ -47,24 +51,29 @@ public class GenerationData{
         this.customerLock = customerLock;
         this.deleteChoice = deleteChoice;
     }
-    public void acceptWalkInCustomer() {
+    public void acceptWalkInCustomer() throws InterruptedException {
         lock.lock();
-        if(logger != null) {
+        if(isFull()) {
             lock.unlock();
         }
         this.generateCurrData();
         lock.unlock();
+        waitingCustomerCount.incrementAndGet();
         try{
             barberChair.acquire();
+            waitingCustomerCount.decrementAndGet();
             barberLock.release();
-            customerLock.acquire();
-            if(logger != null && igenerable.getList().size() == amountData) {
-                this.answer();
-            }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         barberChair.release();
+        customerLock.acquire();
+//        if(logger != null && igenerable.getList().size() == amountData) {
+//            this.answer();
+//        }
+    }
+    private boolean isFull() {
+        return waitingCustomerCount.get() == noOfWaitingChairs && logger != null;
     }
     public void answer() {
         logger.getLogger().printAnswer();

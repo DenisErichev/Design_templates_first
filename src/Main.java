@@ -36,11 +36,9 @@ public class Main {
 
         GenerationData saloon1 = createDate(noOfWaitingChairs,barberLock,customerLock);
         GenerationData saloon2 = createDate(noOfWaitingChairs,barberLock,customerLock);
-        Thread barberThread1 = new Thread(new Barber(barberLock,customerLock,saloon1));
-        Thread barberThread2 = new Thread(new Barber(barberLock,customerLock,saloon2));
         List<Thread> lstBarber = new ArrayList<>();
-        lstBarber.add(barberThread1);
-        lstBarber.add(barberThread2);
+        lstBarber.add(new Thread(new Barber(barberLock,customerLock,saloon1)));
+        lstBarber.add(new Thread(new Barber(barberLock,customerLock,saloon2)));
         List<GenerationData> lst = new ArrayList<>();
         lst.add(saloon1);
         lst.add(saloon2);
@@ -65,7 +63,7 @@ public class Main {
             threads[i].join();
         }
 
-        // Cancel Barber Thread
+//         Cancel Barber Thread
         for(Thread th: lstBarber) {
             th.interrupt();
         }
@@ -83,6 +81,6 @@ public class Main {
         }
         System.out.print("Введите колличество элементов: ");
         counterElements = CheckMethods.checkInputNum();
-        return new GenerationData(barberLock,customerLock,type1,counterElements,delete);
+        return new GenerationData(noOfWaitingChairs,barberLock,customerLock,type1,counterElements,delete);
     }
 }

@@ -16,7 +16,9 @@ public class Barber implements Runnable{
             barberLock.acquire();
             process.runProcessData();
             customerLock.release();
-
+            if(process.logger != null && process.igenerable.getList().size() == process.amountData) {
+                process.answer();
+            }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

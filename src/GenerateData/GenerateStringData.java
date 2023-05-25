@@ -11,7 +11,7 @@ public class GenerateStringData implements Igenerable {
 		Random random = new Random();
 		int delay;
 		for(int i=0;i<amountData;i++) {
-			delay = random.nextInt(3,10);
+			delay = random.nextInt(5,10);
 			strList.add(generateRandomString());
 			System.out.println(strList.get(i));
 			if(i == amountData-1) {
@@ -30,7 +30,7 @@ public class GenerateStringData implements Igenerable {
 		int randomStrLen = random.nextInt(2,10);
 		String str = "";
 		for(int i=0;i<randomStrLen;i++) {
-			targetStringLength = random.nextInt(2,3);
+			targetStringLength = random.nextInt(2,8);
 			String generatedString = random.ints(leftLimit, rightLimit + 1)//поток псевдослуч.чисел
 					.limit(targetStringLength)//выборка элементов конкретной длины
 					.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)//полученную выборку представляем в строковый вид
