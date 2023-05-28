@@ -36,23 +36,18 @@ public class Main {
 
         GenerationData saloon1 = createDate(noOfWaitingChairs,barberLock,customerLock);
         GenerationData saloon2 = createDate(noOfWaitingChairs,barberLock,customerLock);
-        List<Thread> lstBarber = new ArrayList<>();
-        lstBarber.add(new Thread(new Barber(barberLock,customerLock,saloon1)));
-        lstBarber.add(new Thread(new Barber(barberLock,customerLock,saloon2)));
         List<GenerationData> lst = new ArrayList<>();
         lst.add(saloon1);
         lst.add(saloon2);
+        Barber barber = new Barber(barberLock,customerLock,lst);
+        Thread barbTh = new Thread(barber);
         Thread[] threads = new Thread[noOfCustomers];
         //Create customers
         for (int i = 0; i < noOfCustomers; i++) {
             Thread thread = new Thread(new Customer(lst.get(i)));
             threads[i]=thread ;
         }
-
-        //Barber
-        for(Thread th: lstBarber) {
-            th.start();
-        }
+        barbTh.start();
 
         for (int i = 0; i <noOfCustomers; i++) {
             threads[i].start();
@@ -63,10 +58,8 @@ public class Main {
             threads[i].join();
         }
 
-//         Cancel Barber Thread
-        for(Thread th: lstBarber) {
-            th.interrupt();
-        }
+        barbTh.interrupt();
+
 
     }
 

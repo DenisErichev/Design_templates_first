@@ -16,7 +16,6 @@ import ProcessingData.ProcessData;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
@@ -44,33 +43,30 @@ public class GenerationData{
         this.noOfWaitingChairs = noOfWaitingChairs;
         this.amountData = amountData;
         this.type1 = type1;
-//        lsType.add(type1);
         this.lock = new ReentrantLock();
         this.barberChair = new Semaphore(1);
         this.barberLock = barberLock;
         this.customerLock = customerLock;
         this.deleteChoice = deleteChoice;
     }
-    public void acceptWalkInCustomer() throws InterruptedException {
+    public void acceptWalkInCustomer()  {
         lock.lock();
         if(isFull()) {
             lock.unlock();
         }
         this.generateCurrData();
-        lock.unlock();
         waitingCustomerCount.incrementAndGet();
+        lock.unlock();
         try{
             barberChair.acquire();
             waitingCustomerCount.decrementAndGet();
             barberLock.release();
+            customerLock.acquire();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        this.answer();
         barberChair.release();
-        customerLock.acquire();
-//        if(logger != null && igenerable.getList().size() == amountData) {
-//            this.answer();
-//        }
     }
     private boolean isFull() {
         return waitingCustomerCount.get() == noOfWaitingChairs && logger != null;
@@ -93,7 +89,6 @@ public class GenerationData{
     }
 
     public void runProcessData() {
-//        lsType.add(type2);
         lsType.add(type1);
         Ilogger ilogger = null;
         IprocessData iprocessData = null;

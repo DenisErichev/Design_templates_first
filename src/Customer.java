@@ -17,7 +17,5 @@ public class Customer implements Runnable{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-
     }
 }
