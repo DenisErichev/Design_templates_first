@@ -65,8 +65,9 @@ public class GenerationData{
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        this.answer();
+//        this.answer();
         barberChair.release();
+        this.answer();
     }
     private boolean isFull() {
         return waitingCustomerCount.get() == noOfWaitingChairs && logger != null;
