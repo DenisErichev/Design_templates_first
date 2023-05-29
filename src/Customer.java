@@ -5,7 +5,6 @@ import java.util.concurrent.Semaphore;
 
 public class Customer implements Runnable{
     private GenerationData generationData;
-    private int value = 2;
     public Customer(GenerationData generationData) {
         this.generationData = generationData;
     }

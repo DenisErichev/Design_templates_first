@@ -77,40 +77,26 @@ public class GenerationData{
     public void generateCurrData() {
         if (this.type1.contains("строковое")) {
             this.igenerable = new GenerateStringData();
-            lstIgenerable.add(this.igenerable);
             igenerable.generateData(amountData);
         }
         else if (this.type1.contains("целое")) {
             this.igenerable = new GenerateIntData();
-            lstIgenerable.add(this.igenerable);
             igenerable.generateData(amountData);
         }
 
     }
 
     public void runProcessData() {
-        lsType.add(type1);
         Ilogger ilogger = null;
         IprocessData iprocessData = null;
-        if (this.lsType.contains("строковое")) {
-            for(int i=0;i<lstIgenerable.size();i++) {
-                if(lstIgenerable.get(i) instanceof GenerateStringData) {
-                    iprocessData = new ProcessData((List) this.lstIgenerable.get(i).getList(),deleteChoice);
-                    break;
-                }
-            }
+        if (this.type1.equals("строковое")) {
+            iprocessData = new ProcessData((List) this.igenerable.getList(),deleteChoice);
             StringProcess stringProcess = iprocessData.createStrProcessData();
             ilogger = new StringLogger(stringProcess.firstHandler(), stringProcess.getCountWord(), stringProcess.getWordStrings(), stringProcess.getCountSymbols());
-            lstIlog.add(ilogger);
             logger = new Logger(ilogger);
         }
-        else if (this.lsType.contains("целое")) {
-            for(int i=0;i<lstIgenerable.size();i++) {
-                if(lstIgenerable.get(i) instanceof GenerateIntData) {
-                    iprocessData = new ProcessData((List) this.lstIgenerable.get(i).getList(),deleteChoice);
-                    break;
-                }
-            }
+        else if (this.type1.equals("целое")) {
+            iprocessData = new ProcessData((List) this.igenerable.getList(),deleteChoice);
             IntegerProcess integerProcess = iprocessData.createIntProcessData();
             ilogger = new IntegerLogger(integerProcess.Sum(), (double)integerProcess.Average(), integerProcess.Max(), integerProcess.Min(), integerProcess.delete());
             logger = new Logger(ilogger);

@@ -53,7 +53,6 @@ public class Main {
             threads[i].start();
         }
 
-        //Wait for all customers
         for (int i = 0; i <noOfCustomers; i++) {
             threads[i].join();
         }
